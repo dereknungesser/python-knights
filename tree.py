@@ -1,8 +1,8 @@
-class Node 
-    def __init__(self,value)
-        self._value =value
+class Node:
+    def __init__(self,value):
+        self._value = value
         self._parent = None
-        self._children = list()
+        self._children = []
 
     @property
     def value(self):
@@ -13,21 +13,45 @@ class Node
         return self._children
 
     def add_child(self, child_node):
-        if child_node not in self._children
+        if child_node not in self.children:
             self._children.append(child_node)
         if child_node._parent != self:
-            child_node._parent = self           
+            child_node._parent = self
 
     def remove_child(self, child_node):
-        if child_node in self._children
-            self.children.remove(child_node)   
-            child_node._parent = None 
+        if child_node in self.children:
+            self.children.remove(child_node)
+            child_node._parent = None
 
     @property
     def parent(self):
-        return self._parent   
+        return self._parent
 
     @parent.setter
-    def parent(self, child_node)
-        self._parent = child_node
-        child_node.add_child(self)
+    def parent(self, new_parent):
+        if self._parent:
+            self._parent.remove_child(self)
+        self._parent = new_parent
+        if new_parent:
+            new_parent.add_child(self)
+
+
+    def depth_search(self, value):
+        if self._value == value:
+            return self
+        for child in self._children:
+            result = child.depth_search(value)
+            if result:
+                return result
+        return None
+
+
+node1 = Node("root1")
+node2 = Node("root2")
+node3 = Node("root3")
+
+node3.parent = node1
+node3.parent = node2
+
+print(node1.children)
+print(node2.children)
