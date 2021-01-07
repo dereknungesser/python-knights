@@ -16,7 +16,7 @@ class Node:
         if child_node not in self.children:
             self._children.append(child_node)
         if child_node._parent != self:
-            child_node._parent = self
+            child_node.parent = self
 
     def remove_child(self, child_node):
         if child_node in self.children:
