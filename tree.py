@@ -13,15 +13,16 @@ class Node:
         return self._children
 
     def add_child(self, child_node):
-        if child_node not in self.children:
+        if child_node not in self._children:
             self._children.append(child_node)
         if child_node._parent != self:
+        # if child_node._parent != self:
             child_node.parent = self
 
     def remove_child(self, child_node):
-        if child_node in self.children:
-            self.children.remove(child_node)
-            child_node._parent = None
+        if child_node in self._children:
+            self._children.remove(child_node)
+            child_node.parent = None
 
     @property
     def parent(self):
@@ -29,21 +30,42 @@ class Node:
 
     @parent.setter
     def parent(self, new_parent):
-        if self._parent:
+        if self._parent is new_parent:
+            return
+        if self._parent is not None:
             self._parent.remove_child(self)
         self._parent = new_parent
-        if new_parent:
+        if new_parent is not None:
             new_parent.add_child(self)
 
 
     def depth_search(self, value):
+        if not self:
+            return None
         if self._value == value:
             return self
-        for child in self._children:
+
+        for child in self.children:
             result = child.depth_search(value)
             if result:
                 return result
-        return None
+        # return None
+
+    def __repr__(self):
+        return f'{self.value}'
+
+
+
+    # def __str__(self):
+    #     return f"Node<{self._value}>"
+
+    # def breadth_search(self, value):
+    #     self_list = [self]
+    #     while len(self_list) > 0:
+    #         new_Node = self_list.pop()
+    #         if new_Node.value == value:
+    #             return new_Node
+
 
 
 node1 = Node("root1")
