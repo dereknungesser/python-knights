@@ -34,6 +34,8 @@ class KnightPathFinder:
         self._considered_postitions = self._considered_postitions.union(new_moves)
         return new_moves
 
+    def build_move_tree(self):    
+
 
 finder = KnightPathFinder((0, 0))
 print(finder.new_move_positions((0, 0)))
