@@ -21,3 +21,17 @@ class KnightPathFinder:
         }
         possible_moves = {}
         return possible_moves
+
+    def new_move_positions(self, pos):
+        possible_moves = self.get_valid_moves(pos)
+
+        new_moves = possible_moves.difference(self._considered_postitions)
+
+        self._considered_postitions = self._considered_postitions.union(new_moves)
+        return new_moves
+
+    def build_move_tree(self):
+
+
+finder = KnightPathFinder((0, 0))
+print(finder.new_move_positions((0, 0)))
